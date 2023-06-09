@@ -1,5 +1,5 @@
-![Forks]([https://img.shields.io/badge/forks-44-blue](https://www.flaticon.com/free-icon/plane_870143?term=plane&page=1&position=8&origin=search&related_id=870143))
-![Stars]([https://img.shields.io/badge/stars-13-yellow](https://www.flaticon.com/free-icon/ticket_1614997?term=ticket&page=1&position=15&origin=search&related_id=1614997))
+![Forks](https://www.flaticon.com/free-icon/plane_870143?term=plane&page=1&position=9&origin=search&related_id=870143)
+![Stars](https://www.flaticon.com/free-icon/ticket_1614997?term=ticket&page=1&position=15&origin=search&related_id=1614997)
 # FlightTicketReservationSystem
 
 ## Description
