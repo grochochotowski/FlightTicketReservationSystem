@@ -29,8 +29,8 @@ namespace FlightTicketReservationSystem {
         protected int NumberOfGates;
         protected List<Runway> runways;
 
-        public Coordinates Coordinates {
-            get { return coordinates; }
+        public Cordinates Coordinates {
+            get { return cordinates; }
         }
 
         public void addRunway(Runway runway) {
