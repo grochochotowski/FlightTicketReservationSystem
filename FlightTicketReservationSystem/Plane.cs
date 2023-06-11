@@ -5,6 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace FlightTicketReservationSystem {
-    internal class Plane {
+    class Plane {
+        int x, y;
+        public Plane(int x, int y) {
+            this.x = x;
+            this.y = y;
+        }
     }
 }
