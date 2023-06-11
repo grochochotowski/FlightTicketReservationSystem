@@ -6,5 +6,17 @@ using System.Threading.Tasks;
 
 namespace FlightTicketReservationSystem {
     internal class Runway {
+        private string number;
+        private double width;
+        private double lenght;
+
+        public Runway(string number, double width, double lenght)
+        {
+            this.number = number;
+            this.width = width;
+            this.lenght = lenght;
+        }
+
+        
     }
 }
