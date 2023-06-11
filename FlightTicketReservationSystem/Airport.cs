@@ -14,13 +14,24 @@ namespace FlightTicketReservationSystem {
             this.x = x;
             this.y = y;
         }
+        public int X {
+            get { return x; }
+        }
+
+        public int Y {
+            get { return y; }
+        }
     }
-     abstract class Airport {
+    abstract class Airport {
 
         protected string code;
         protected Cordinates cordinates;
         protected int NumberOfGates;
         protected List<Runway> runways;
+
+        public Coordinates Coordinates {
+            get { return coordinates; }
+        }
 
         public void addRunway(Runway runway) {
             runways.Add(runway);
