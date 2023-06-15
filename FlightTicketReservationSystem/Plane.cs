@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace FlightTicketReservationSystem {
     abstract class Plane {
-        protected string number;
-        protected double width, length, maxDistance, speed;
+        public string number;
+        protected double width, length, maxDistance;
+        public double speed;
         protected int numberOfSeats;
         public Plane(string number, double width, double length, double maxDistance, double speed, int numberOfSeats) {
             this.number = number;
@@ -25,7 +26,7 @@ namespace FlightTicketReservationSystem {
     }
     class MidSizeJet: Plane {
         public MidSizeJet(string number, double width, double length, double maxDistance, double speed, int numberOfSeats): base(number, width, length, maxDistance, speed, numberOfSeats) { }
-        public override string data { get { return $"Medium Size Jet - {number}"; } }
+        public override string data { get { return $"Light Jet - {number}"; } }
     }
     class JumboJet: Plane {
         public JumboJet(string number, double width, double length, double maxDistance, double speed, int numberOfSeats): base(number, width, length, maxDistance, speed, numberOfSeats) { }

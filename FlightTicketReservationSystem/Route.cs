@@ -9,14 +9,16 @@ namespace FlightTicketReservationSystem {
     class Route {
         public Airport departureAirport;
         public Airport arrivalAirport;
-        private double distance;
+        public double distance;
 
         public Route(Airport departureAirport, Airport arrivalAirport)
         {
             this.departureAirport = departureAirport;
             this.arrivalAirport = arrivalAirport;
             this.distance = calculateDistance(departureAirport, arrivalAirport);
-        }   
+        }
+
+        public string data { get { return $"{departureAirport} to {arrivalAirport}: {distance}km"; } }
 
         public double calculateDistance(Airport departureAirport, Airport arrivalAirport) {
             int x1 = departureAirport.Cordinates.X;

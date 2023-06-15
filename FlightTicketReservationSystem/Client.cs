@@ -7,12 +7,12 @@ using System.Web;
 
 namespace FlightTicketReservationSystem {
     internal abstract class Client {
-        protected int clientId;
+        public int clientId;
         protected string phoneNumber;
         protected string email;
         protected List<Ticket> tickets = new List<Ticket>();
 
-        public Client(int clientId, string phoneNumber, string email)
+        public Client(int clientId, string phoneNumber, string email, List<Ticket> tickets)
         {
             this.clientId = clientId;
             this.phoneNumber = phoneNumber;
@@ -43,7 +43,7 @@ namespace FlightTicketReservationSystem {
         private string lastName;
         private int age;
 
-        public Person(int clientId,  string phoneNumber, string email, string firstName, string secondName, string lastName, int age) : base(clientId, phoneNumber, email)
+        public Person(int clientId,  string phoneNumber, string email, string firstName, string secondName, string lastName, int age, List<Ticket> tickets) : base(clientId, phoneNumber, email, tickets)
         {
             this.firstName = firstName;
             this.secondName = secondName;
@@ -58,7 +58,7 @@ namespace FlightTicketReservationSystem {
         private string name;
         private string krs;
 
-        public Company(int clientId, string phoneNumber, string email, string name, string krs) : base(clientId, phoneNumber, email)
+        public Company(int clientId, string phoneNumber, string email, string name, string krs, List<Ticket> tickets) : base(clientId, phoneNumber, email, tickets)
         {
             this.name = name;
             this.krs = krs;
