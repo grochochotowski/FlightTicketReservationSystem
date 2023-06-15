@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace FlightTicketReservationSystem {
+    //========================================================================================COORDINATES CLASS
     [Serializable]
     class Coordinates {
         int x;
@@ -22,6 +23,7 @@ namespace FlightTicketReservationSystem {
             get { return y; }
         }
     }
+    //========================================================================================AIRPORT CLASS
     [Serializable]
     abstract class Airport {
 
@@ -40,6 +42,7 @@ namespace FlightTicketReservationSystem {
         public abstract string Type { get; }
         public string Code { get { return code; } }
     }
+    //========================================================================================AIRPORT SUBCLASSES
     [Serializable]
     class Local : Airport {
         public Local(string code, Coordinates coordinates) : base(code, coordinates) { }

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace FlightTicketReservationSystem {
+    //========================================================================================PLANE CLASS
     [Serializable]
     abstract class Plane {
         public string number;
@@ -21,6 +22,7 @@ namespace FlightTicketReservationSystem {
         }
         public abstract string data { get; }
     }
+    //========================================================================================PLANE SUBCLASSES
     [Serializable]
     class LightJet: Plane {
         public LightJet(string number, double width, double length, double maxDistance, double speed, int numberOfSeats): base(number, width, length, maxDistance, speed, numberOfSeats) { }

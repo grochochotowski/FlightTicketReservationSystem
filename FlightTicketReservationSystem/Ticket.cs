@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace FlightTicketReservationSystem {
+    //========================================================================================TICKET CLASS
     [Serializable]
     internal abstract class Ticket {
         protected string ticketId;
@@ -28,6 +29,7 @@ namespace FlightTicketReservationSystem {
 
         public abstract string ticketData { get; }
     }
+    //========================================================================================TICKET SUBCLASSES
     [Serializable]
     class Buissnes : Ticket {
         public Buissnes(string ticketId, double price, string seatNumber, Flight flight, int meals, bool Return, int commutationTicket) : base(ticketId, price, seatNumber, flight, meals, Return, commutationTicket) { }

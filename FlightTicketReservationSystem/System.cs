@@ -4,7 +4,7 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
 namespace FlightTicketReservationSystem {
-
+    //========================================================================================SERIALIZER
     public class Serializer {
         public void SaveState(object obj, string fileRoute) {
             using (FileStream file = new FileStream(fileRoute, FileMode.Create)) {
@@ -20,7 +20,7 @@ namespace FlightTicketReservationSystem {
             }
         }
     }
-
+    //========================================================================================SYSTEM CLASS
     [Serializable]
     internal class System {
         private List<Client> clients = new List<Client>();

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Web;
 
 namespace FlightTicketReservationSystem {
+    //========================================================================================CLIENT CLASS
     [Serializable]
     internal abstract class Client {
         public int clientId;
@@ -36,6 +37,7 @@ namespace FlightTicketReservationSystem {
 
         public abstract string clientData { get; }
     }
+    //========================================================================================CLIENT SUBCLASSES
     [Serializable]
     class Person : Client {
         public string firstName;
