@@ -36,7 +36,14 @@ namespace FlightTicketReservationSystem {
             Console.WriteLine("Choose who you are:");
             Console.WriteLine("1) Admin");
             Console.WriteLine("2) Client");
-            int accountType = Convert.ToInt32(Console.ReadLine());
+            int accountType;
+            try {
+                accountType = Convert.ToInt32(Console.ReadLine());
+            }
+            catch (FormatException) {
+                Console.WriteLine("Invalid input. Please enter a valid integer.");
+                return;
+            }
 
             switch (accountType) {
                 //========================================================================================ACCOUNT TYPE - ADMIN
@@ -50,9 +57,13 @@ namespace FlightTicketReservationSystem {
                         Console.WriteLine("3) Routes");
                         Console.WriteLine("4) Flights");
                         Console.WriteLine("5) Exit");
-
-                        adminOption = Convert.ToInt32(Console.ReadLine());
-
+                        try {
+                            adminOption = Convert.ToInt32(Console.ReadLine());
+                        }
+                        catch (FormatException) {
+                            Console.WriteLine("Invalid input. Please enter a valid integer.");
+                            return;
+                        }
                         switch (adminOption) {
                             //----------------------------------------------------------------------------------------MANAGE AIRPORTS
                             case 1:
@@ -67,7 +78,14 @@ namespace FlightTicketReservationSystem {
                                     Console.WriteLine($"{count}: {airport.Code} {airport.Type}");
                                     count++;
                                 }
-                                int airportOption = Convert.ToInt32(Console.ReadLine()); //!!TRY-CATCH
+                                int airportOption;
+                                try {
+                                    airportOption = Convert.ToInt32(Console.ReadLine());
+                                }
+                                catch (FormatException) {
+                                    Console.WriteLine("Invalid input. Please enter a valid integer.");
+                                    return;
+                                }
                                 switch (airportOption) {
                                     case 1:
                                         //go back
@@ -80,13 +98,33 @@ namespace FlightTicketReservationSystem {
                                         Console.WriteLine("Airport code:");
                                         string newAirportCode = Console.ReadLine();
                                         Console.WriteLine("Airport X coordinates:");
-                                        int newAirportCordX = Convert.ToInt32(Console.ReadLine());
+                                        int newAirportCordX;
+                                        try {
+                                            newAirportCordX = Convert.ToInt32(Console.ReadLine());
+                                        }
+                                        catch (FormatException) {
+                                            Console.WriteLine("Invalid input. Please enter a valid integer.");
+                                            return;
+                                        }
                                         Console.WriteLine("Airport Y coordinates:");
-                                        int newAirportCordY = Convert.ToInt32(Console.ReadLine());
-
+                                        int newAirportCordY;
+                                        try {
+                                            newAirportCordY = Convert.ToInt32(Console.ReadLine());
+                                        }
+                                        catch (FormatException) {
+                                            Console.WriteLine("Invalid input. Please enter a valid integer.");
+                                            return;
+                                        }
                                         Console.WriteLine("Type [1 - international / 2 - local]:");
-                                        int newAirportType = Convert.ToInt32(Console.ReadLine());
-                                        Cordinates cords = new Cordinates(newAirportCordX, newAirportCordY);
+                                        int newAirportType;
+                                        try {
+                                            newAirportType = Convert.ToInt32(Console.ReadLine());
+                                        }
+                                        catch (FormatException) {
+                                            Console.WriteLine("Invalid input. Please enter a valid integer.");
+                                            return;
+                                        }
+                                        Coordinates cords = new Coordinates(newAirportCordX, newAirportCordY);
                                         if (newAirportType == 1) {
                                             newAirport = new International(newAirportCode, cords);
                                         }
@@ -115,7 +153,14 @@ namespace FlightTicketReservationSystem {
                                     Console.WriteLine($"{count}: {plane.data}");
                                     count++;
                                 }
-                                int planeOption = Convert.ToInt32(Console.ReadLine());
+                                int planeOption;
+                                try {
+                                    planeOption = Convert.ToInt32(Console.ReadLine());
+                                }
+                                catch (FormatException) {
+                                    Console.WriteLine("Invalid input. Please enter a valid integer.");
+                                    return;
+                                }
                                 switch (planeOption) {
                                     case 1:
                                         //go back
@@ -136,10 +181,24 @@ namespace FlightTicketReservationSystem {
                                         Console.WriteLine("Plane average speed:");
                                         double newPlaneSpeed = Convert.ToDouble(Console.ReadLine());
                                         Console.WriteLine("Plane number of sitting places:");
-                                        int newPlaneNumberOfSeats = Convert.ToInt32(Console.ReadLine());
+                                        int newPlaneNumberOfSeats;
+                                        try {
+                                            newPlaneNumberOfSeats = Convert.ToInt32(Console.ReadLine());
+                                        }
+                                        catch (FormatException) {
+                                            Console.WriteLine("Invalid input. Please enter a valid integer.");
+                                            return;
+                                        }
 
                                         Console.WriteLine("Type [1 - Light Jet / 2 - Medium Size Jet / 3 - Jumbo Jet / 4 - Bussiness Jet]:");
-                                        int newPlaneType = Convert.ToInt32(Console.ReadLine());
+                                        int newPlaneType;
+                                        try {
+                                            newPlaneType = Convert.ToInt32(Console.ReadLine());
+                                        }
+                                        catch (FormatException) {
+                                            Console.WriteLine("Invalid input. Please enter a valid integer.");
+                                            return;
+                                        }
                                         if (newPlaneType == 1) {
                                             newPlane = new LightJet(newPlaneNumber, newPlaneWidth, newPlaneLength, newPlaneMaxDistance, newPlaneSpeed, newPlaneNumberOfSeats);
                                         }
@@ -174,8 +233,14 @@ namespace FlightTicketReservationSystem {
                                     Console.WriteLine($"{count}: {route.data}");
                                     count++;
                                 }
-
-                                int routeOption = Convert.ToInt32(Console.ReadLine());
+                                int routeOption;
+                                try {
+                                    routeOption = Convert.ToInt32(Console.ReadLine());
+                                }
+                                catch (FormatException) {
+                                    Console.WriteLine("Invalid input. Please enter a valid integer.");
+                                    return;
+                                }
                                 switch (routeOption) {
                                     case 1:
                                         //go back
@@ -214,7 +279,14 @@ namespace FlightTicketReservationSystem {
                                     Console.WriteLine($"{count}: {flight.data}");
                                     count++;
                                 }
-                                int flightOption = Convert.ToInt32(Console.ReadLine());
+                                int flightOption;
+                                try {
+                                    flightOption = Convert.ToInt32(Console.ReadLine());
+                                }
+                                catch (FormatException) {
+                                    Console.WriteLine("Invalid input. Please enter a valid integer.");
+                                    return;
+                                }
                                 switch (flightOption) {
                                     case 1:
                                         //go back
@@ -230,7 +302,14 @@ namespace FlightTicketReservationSystem {
                                             Console.WriteLine($"{count}: {route.data}");
                                             count++;
                                         }
-                                        int chosenRouteId = Convert.ToInt32(Console.ReadLine());
+                                        int chosenRouteId;
+                                        try {
+                                            chosenRouteId = Convert.ToInt32(Console.ReadLine());
+                                        }
+                                        catch (FormatException) {
+                                            Console.WriteLine("Invalid input. Please enter a valid integer.");
+                                            return;
+                                        }
                                         Route newFlightRoute = routes[chosenRouteId - 1];
                                         Console.Clear();
 
@@ -240,7 +319,14 @@ namespace FlightTicketReservationSystem {
                                             Console.WriteLine($"{count}: {plane.data}");
                                             count++;
                                         }
-                                        int chosenPlaneId = Convert.ToInt32(Console.ReadLine());
+                                        int chosenPlaneId;
+                                        try {
+                                            chosenPlaneId = Convert.ToInt32(Console.ReadLine());
+                                        }
+                                        catch (FormatException) {
+                                            Console.WriteLine("Invalid input. Please enter a valid integer.");
+                                            return;
+                                        }
                                         Plane newFlightPlane = planes[chosenPlaneId - 1];
                                         Console.Clear();
 
@@ -274,8 +360,14 @@ namespace FlightTicketReservationSystem {
                         Console.WriteLine("3) Login as person:");
                         Console.WriteLine("4) Login as company");
                         Console.WriteLine("5) Exit");
-                        clientOption = Convert.ToInt32(Console.ReadLine());
                         int maxClientListId = clients.Count;
+                        try {
+                            clientOption = Convert.ToInt32(Console.ReadLine());
+                        }
+                        catch (FormatException) {
+                            Console.WriteLine("Invalid input. Please enter a valid integer.");
+                            return;
+                        }
                         switch (clientOption) {
                             //----------------------------------------------------------------------------------------CREATE PERSON
                             case 1:
@@ -293,7 +385,14 @@ namespace FlightTicketReservationSystem {
                                 Console.WriteLine("Last name: ");
                                 string newPersonLastName = Console.ReadLine();
                                 Console.WriteLine("Age: ");
-                                int newPersonAge = Convert.ToInt32(Console.ReadLine()); //!!!TRY-CATCH
+                                int newPersonAge;
+                                try {
+                                    newPersonAge = Convert.ToInt32(Console.ReadLine());
+                                }
+                                catch (FormatException) {
+                                    Console.WriteLine("Invalid input. Please enter a valid integer.");
+                                    return;
+                                }
                                 Console.WriteLine("E-mail: ");
                                 string newPersonEmail = Console.ReadLine();
                                 Console.WriteLine("Phone number: ");
@@ -340,7 +439,15 @@ namespace FlightTicketReservationSystem {
                                     }  
                                 }
                                 // CHOOSE CLIENT
-                                int chosenAccount = Convert.ToInt32(Console.ReadLine()); //!!!TRY-CATCH
+                                int chosenAccount;
+                                try {
+                                    chosenAccount = Convert.ToInt32(Console.ReadLine());
+                                }
+                                catch (FormatException) {
+                                    Console.WriteLine("Invalid input. Please enter a valid integer.");
+                                    break;
+                                }
+                                
                                 count = 1;
                                 foreach (Client client in clients) {
                                     if (client is Person && count == chosenAccount) {
@@ -361,7 +468,14 @@ namespace FlightTicketReservationSystem {
                                 Console.WriteLine("2) Manage your tickets");
                                 Console.WriteLine("3) Delete your account");
                                 Console.WriteLine("4) Log out");
-                                int userOption = Convert.ToInt32(Console.ReadLine());
+                                int userOption;
+                                try {
+                                    userOption = Convert.ToInt32(Console.ReadLine());
+                                }
+                                catch (FormatException) {
+                                    Console.WriteLine("Invalid input. Please enter a valid integer.");
+                                    return;
+                                }
                                 switch (userOption) {
                                     // book new flight
                                     case 1:
@@ -374,7 +488,14 @@ namespace FlightTicketReservationSystem {
                                             Console.WriteLine($"{count}: {airport.Type} - {airport.Code}");
                                             count++;
                                         }
-                                        int departureChoice = Convert.ToInt32(Console.ReadLine());
+                                        int departureChoice;
+                                        try {
+                                            departureChoice = Convert.ToInt32(Console.ReadLine());
+                                        }
+                                        catch (FormatException) {
+                                            Console.WriteLine("Invalid input. Please enter a valid integer.");
+                                            return;
+                                        }
                                         departureAirport = airports[departureChoice];
                                         Console.Clear();
                                         // choosing arrival airport
@@ -385,7 +506,14 @@ namespace FlightTicketReservationSystem {
                                             Console.WriteLine($"{count}: {airport.Type} - {airport.Code}");
                                             count++;
                                         }
-                                        int arrivalChoice = Convert.ToInt32(Console.ReadLine());
+                                        int arrivalChoice;
+                                        try {
+                                            arrivalChoice = Convert.ToInt32(Console.ReadLine());
+                                        }
+                                        catch (FormatException) {
+                                            Console.WriteLine("Invalid input. Please enter a valid integer.");
+                                            return;
+                                        }
                                         arrivalAirport = airports[arrivalChoice];
                                         Console.Clear();
                                         // searching for route
@@ -426,7 +554,14 @@ namespace FlightTicketReservationSystem {
                                             Console.WriteLine($"{count}: {ticket.ticketData}");
                                             count++;
                                         }
-                                        int ticketOption = Convert.ToInt32(Console.ReadLine());
+                                        int ticketOption;
+                                        try {
+                                            ticketOption = Convert.ToInt32(Console.ReadLine());
+                                        }
+                                        catch (FormatException) {
+                                            Console.WriteLine("Invalid input. Please enter a valid integer.");
+                                            return;
+                                        }
                                         switch (ticketOption) {
                                             case 1:
                                                 // go back
@@ -463,7 +598,14 @@ namespace FlightTicketReservationSystem {
                                     }
                                 }
                                 // CHOOSE A COMPANY
-                                int chosenCompanyAccount = Convert.ToInt32(Console.ReadLine());
+                                int chosenCompanyAccount;
+                                try {
+                                    chosenCompanyAccount = Convert.ToInt32(Console.ReadLine());
+                                }
+                                catch (FormatException) {
+                                    Console.WriteLine("Invalid input. Please enter a valid integer.");
+                                    return;
+                                }
                                 foreach (Company client in clients) {
                                     if (count == chosenCompanyAccount) {
                                         loggedInAccount = client;
@@ -483,7 +625,14 @@ namespace FlightTicketReservationSystem {
                                 Console.WriteLine("2) Manage your tickets");
                                 Console.WriteLine("3) Delete your account");
                                 Console.WriteLine("4) Log out");
-                                int companyOption = Convert.ToInt32(Console.ReadLine());
+                                int companyOption;
+                                try {
+                                    companyOption = Convert.ToInt32(Console.ReadLine());
+                                }
+                                catch (FormatException) {
+                                    Console.WriteLine("Invalid input. Please enter a valid integer.");
+                                    return;
+                                }
                                 switch (companyOption) {
                                     // book new flight
                                     case 1:
@@ -495,7 +644,14 @@ namespace FlightTicketReservationSystem {
                                             Console.WriteLine($"{count}: {airport.Type} - {airport.Code}");
                                             count++;
                                         }
-                                        int departureChoice = Convert.ToInt32(Console.ReadLine());
+                                        int departureChoice;
+                                        try {
+                                            departureChoice = Convert.ToInt32(Console.ReadLine());
+                                        }
+                                        catch (FormatException) {
+                                            Console.WriteLine("Invalid input. Please enter a valid integer.");
+                                            return;
+                                        }
                                         departureAirport = airports[departureChoice];
                                         Console.Clear();
                                         // choosing arrival airport
@@ -506,7 +662,14 @@ namespace FlightTicketReservationSystem {
                                             Console.WriteLine($"{count}: {airport.Type} - {airport.Code}");
                                             count++;
                                         }
-                                        int arrivalChoice = Convert.ToInt32(Console.ReadLine());
+                                        int arrivalChoice;
+                                        try {
+                                            arrivalChoice = Convert.ToInt32(Console.ReadLine());
+                                        }
+                                        catch (FormatException) {
+                                            Console.WriteLine("Invalid input. Please enter a valid integer.");
+                                            return;
+                                        }
                                         arrivalAirport = airports[arrivalChoice];
                                         Console.Clear();
                                         // searching for route
@@ -547,7 +710,14 @@ namespace FlightTicketReservationSystem {
                                             Console.WriteLine($"{count}: {ticket.ticketData}");
                                             count++;
                                         }
-                                        int ticketOption = Convert.ToInt32(Console.ReadLine());
+                                        int ticketOption;
+                                        try {
+                                            ticketOption = Convert.ToInt32(Console.ReadLine());
+                                        }
+                                        catch (FormatException) {
+                                            Console.WriteLine("Invalid input. Please enter a valid integer.");
+                                            return;
+                                        }
                                         switch (ticketOption) {
                                             case 1:
                                                 // go back

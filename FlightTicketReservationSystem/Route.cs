@@ -22,10 +22,10 @@ namespace FlightTicketReservationSystem {
         public string data { get { return $"{departureAirport} to {arrivalAirport}: {distance}km"; } }
 
         public double calculateDistance(Airport departureAirport, Airport arrivalAirport) {
-            int x1 = departureAirport.Cordinates.X;
-            int y1 = departureAirport.Cordinates.Y;
-            int x2 = arrivalAirport.Cordinates.X;
-            int y2 = arrivalAirport.Cordinates.Y;
+            int x1 = departureAirport.Coordinates.X;
+            int y1 = departureAirport.Coordinates.Y;
+            int x2 = arrivalAirport.Coordinates.X;
+            int y2 = arrivalAirport.Coordinates.Y;
 
             double distance = Math.Sqrt(Math.Pow(x1 - x2, 2) + Math.Pow(y1 - y2, 2));
 
