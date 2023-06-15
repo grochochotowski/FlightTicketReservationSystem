@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Web;
 
 namespace FlightTicketReservationSystem {
+    [Serializable]
     internal abstract class Client {
         public int clientId;
         protected string phoneNumber;
@@ -35,7 +36,7 @@ namespace FlightTicketReservationSystem {
 
         public abstract string clientData { get; }
     }
-
+    [Serializable]
     class Person : Client {
         public string firstName;
         private string secondName;
@@ -52,7 +53,7 @@ namespace FlightTicketReservationSystem {
         public override string clientData { get { return $"[{clientId}] {firstName} {secondName}"; } }
     }
 
-
+    [Serializable]
     class Company : Client
     {
         public string name;

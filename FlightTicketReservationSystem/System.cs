@@ -1,6 +1,27 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace FlightTicketReservationSystem {
+
+    public class Serializer {
+        public void SaveState(object obj, string fileRoute) {
+            using (FileStream file = new FileStream(fileRoute, FileMode.Create)) {
+                BinaryFormatter formatter = new BinaryFormatter();
+                formatter.Serialize(file, obj);
+            }
+        }
+
+        public Tstate ReadState<Tstate>(string fileRoute) {
+            using (FileStream file = new FileStream(fileRoute, FileMode.Open)) {
+                BinaryFormatter formatter = new BinaryFormatter();
+                return (Tstate)formatter.Deserialize(file);
+            }
+        }
+    }
+
+    [Serializable]
     internal class System {
         private List<Client> clients = new List<Client>();
         private List<Route> routes = new List<Route>();
@@ -37,6 +58,18 @@ namespace FlightTicketReservationSystem {
         public void addFlight(Flight flight) { flights.Add(flight); }
         public void removeFlight(Flight flight) { flights.Remove(flight); }
         public List<Flight> getFlights() { return flights; }
+
+
+
+        public void SaveState(string fileRoute) {
+            Serializer serializer = new Serializer();
+            serializer.SaveState(this, fileRoute);
+        }
+
+        public static System ReadState(string fileRoute) {
+            Serializer serializer = new Serializer();
+            return serializer.ReadState<System>(fileRoute);
+        }
 
     }
 }

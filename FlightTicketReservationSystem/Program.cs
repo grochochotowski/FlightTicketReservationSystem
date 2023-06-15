@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.IO.Pipes;
 using System.Linq;
 using System.Net.NetworkInformation;
@@ -16,8 +17,16 @@ namespace FlightTicketReservationSystem {
             if (answer.ToUpper() == "YES") Console.WriteLine("Your request has been submitted.");
         }
         static void Main(string[] args) {
+            string fileRoute = "system_state.bin";
+            System system;
+            if (File.Exists(fileRoute)) {
+                system = System.ReadState(fileRoute);
+            }
+            else {
+                system = new System();
+            }
+
             int count;
-            System system = new System();
             List<Airport> airports = system.getAirports();
             List<Plane> planes = system.getPlanes();
             List<Route> routes = system.getRoutes();
@@ -322,11 +331,6 @@ namespace FlightTicketReservationSystem {
                             case 3:
                                 Console.Clear();
                                 // DISPLAY ALL PEOPLE
-                                count = 1;
-                                foreach (Client client in clients) {
-                                    Console.WriteLine($"{count}: {client.clientData}");
-                                    count++;
-                                }
                                 Console.WriteLine("============================Choose an account to log in============================");
                                 count = 1;
                                 foreach (Client client in clients) {
@@ -571,6 +575,7 @@ namespace FlightTicketReservationSystem {
                     } while (clientOption != 5);
                     break;
             }
+            system.SaveState(fileRoute);
         }
     }
 }

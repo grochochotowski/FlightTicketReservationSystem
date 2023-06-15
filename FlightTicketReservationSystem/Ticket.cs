@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace FlightTicketReservationSystem {
+    [Serializable]
     internal abstract class Ticket {
         protected string ticketId;
         protected double price;
@@ -27,17 +28,17 @@ namespace FlightTicketReservationSystem {
 
         public abstract string ticketData { get; }
     }
-
+    [Serializable]
     class Buissnes : Ticket {
         public Buissnes(string ticketId, double price, string seatNumber, Flight flight, int meals, bool Return, int commutationTicket) : base(ticketId, price, seatNumber, flight, meals, Return, commutationTicket) { }
         public override string ticketData { get { return $"Bussines ticket {ticketId} - from {flight.route.departureAirport.Code} to {flight.route.arrivalAirport.Code}"; } }
     }
-
+    [Serializable]
     class Economy : Ticket {
         public Economy(string ticketId, double price, string seatNumber, Flight flight, int meals, bool Return, int commutationTicket) : base(ticketId, price, seatNumber, flight, meals, Return, commutationTicket) { }
         public override string ticketData { get { return $"Economy ticket {ticketId} - from {flight.route.departureAirport.Code} to {flight.route.arrivalAirport.Code}"; } }
     }
-
+    [Serializable]
     class First : Ticket {
         public First(string ticketId, double price, string seatNumber, Flight flight, int meals, bool Return, int commutationTicket) : base(ticketId, price, seatNumber, flight, meals, Return, commutationTicket) { }
         public override string ticketData { get { return $"First class ticket {ticketId} - from {flight.route.departureAirport.Code} to {flight.route.arrivalAirport.Code}"; } }

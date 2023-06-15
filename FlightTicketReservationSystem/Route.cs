@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace FlightTicketReservationSystem {
+    [Serializable]
     class Route {
         public Airport departureAirport;
         public Airport arrivalAirport;
