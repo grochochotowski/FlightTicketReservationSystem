@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace FlightTicketReservationSystem {
     [Serializable]
-    class Cordinates {
+    class Coordinates {
         int x;
         int y;
 
-        public Cordinates(int x, int y) {
+        public Coordinates(int x, int y) {
             this.x = x;
             this.y = y;
         }
@@ -26,15 +26,15 @@ namespace FlightTicketReservationSystem {
     abstract class Airport {
 
         protected string code;
-        protected Cordinates cordinates;
+        protected Coordinates coordinates;
 
-        public Cordinates Cordinates {
-            get { return cordinates; }
+        public Coordinates Coordinates {
+            get { return coordinates; }
         }
 
-        public Airport(string code, Cordinates cordinates) {
+        public Airport(string code, Coordinates coordinates) {
             this.code = code;
-            this.cordinates = cordinates;
+            this.coordinates = coordinates;
         }
 
         public abstract string Type { get; }
@@ -42,12 +42,12 @@ namespace FlightTicketReservationSystem {
     }
     [Serializable]
     class Local : Airport {
-        public Local(string code, Cordinates cordinates) : base(code, cordinates) { }
+        public Local(string code, Coordinates coordinates) : base(code, coordinates) { }
         public override string Type { get { return "Local"; } }
     }
     [Serializable]
     class International : Airport {
-        public International(string code, Cordinates cordinates) : base(code, cordinates) { }
+        public International(string code, Coordinates coordinates) : base(code, coordinates) { }
         public override string Type { get { return "International"; } }
     }
 }
