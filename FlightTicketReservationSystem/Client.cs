@@ -36,26 +36,26 @@ namespace FlightTicketReservationSystem {
         public abstract string clientData { get; }
     }
 
-    class Person : Client
-    {
-        private string firstName;
+    class Person : Client {
+        public string firstName;
         private string secondName;
         private string lastName;
         private int age;
 
-        public Person(int clientId,  string phoneNumber, string email, string firstName, string secondName, string lastName, int age, List<Ticket> tickets) : base(clientId, phoneNumber, email, tickets)
-        {
+        public Person(int clientId, string phoneNumber, string email, string firstName, string secondName, string lastName, int age, List<Ticket> tickets) : base(clientId, phoneNumber, email, tickets) {
             this.firstName = firstName;
             this.secondName = secondName;
             this.lastName = lastName;
             this.age = age;
         }
-        public override string clientData { get { return $"{clientId}: {firstName} {secondName}"; } }
+
+        public override string clientData { get { return $"[{clientId}] {firstName} {secondName}"; } }
     }
+
 
     class Company : Client
     {
-        private string name;
+        public string name;
         private string krs;
 
         public Company(int clientId, string phoneNumber, string email, string name, string krs, List<Ticket> tickets) : base(clientId, phoneNumber, email, tickets)
@@ -64,6 +64,6 @@ namespace FlightTicketReservationSystem {
             this.krs = krs;
         }
 
-        public override string clientData { get { return $"{clientId}: {name} - {krs}"; } }
+        public override string clientData { get { return $"[{clientId}] {name} - {krs}"; } }
     }
 }
