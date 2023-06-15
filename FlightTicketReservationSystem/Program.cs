@@ -10,122 +10,77 @@ namespace FlightTicketReservationSystem {
     internal class Program {
         static void Main(string[] args) {
 
-
-
-            //ywbierz kim jetes
-           
-            Console.WriteLine("Wybierz kim jeets");
-            Console.WriteLine("osoba -1");
-            Console.WriteLine("firma -2");
-            int y;
-            do
-            {
-                y = Convert.ToInt32(Console.ReadLine());
-
-                if (y == 1)
-                {
-                    Console.WriteLine("Podaj swoje imie:");
-                    string name = Console.ReadLine();
-                    Console.WriteLine("podaj swoje drugie imie:");
-                    string secondName = Console.ReadLine();
-                    Console.WriteLine("Podaj swoje nazwsiko:");
-                    string surname = Console.ReadLine();
-                    Console.WriteLine("Podaj swoj wiek:");
-                    int age = Convert.ToInt32(Console.ReadLine());
-
-                    Person person1 = new Person(name, secondName, surname, age);
-
-                }
-
-                if (y == 2)
-                {
-                    Console.WriteLine("Podaj swoje nazwa:");
-                    string name = Console.ReadLine();
-                    Console.WriteLine("podaj krs:");
-                    string krs = Console.ReadLine();
-
-                    Company company1 = new Company(name, krs);
-
-                }
-
-            } while (y==1 || y ==2);
-
-            // menu
-            Console.WriteLine("1- Wyświetl liste obsługiwanych lotnisk");
-
-            Console.WriteLine("2- Kup bilet");
-            //osoba czy firma
-           
-           // skad dokad
-           //kiedy
-            // wybierz bielt
-           
-            // czy powielany
-         
-
-            Console.WriteLine("3- usun bilet");
-            int x = Convert.ToInt32(Console.ReadLine());
-
-            switch (x)
-            {
+            System system;
+            //Ticket reservation
+            switch(choice) {
                 case 1:
-                    //wyswietlenie listy lotnisk
+
+                    List<Airport> airports = system.getAirports();
+                    //choosing departure airport
+                    Airport departureAirport;
+                    Console.WriteLine("Choose a departure Airport:");
+                    int count = 1;
+                    foreach (Airport airport in airports) {
+                        Console.WriteLine($"{count}: {airport.Type} - {airport.Code}");
+                        count++;
+                    }
+                    int departureChoice = Convert.ToInt32(Console.ReadLine());
+                    departureAirport = airports[departureChoice];
+                    Console.Clear();
+                    //choosing arrival airport
+                    Airport arrivalAirport;
+                    Console.WriteLine("Choose a departure Airport:");
+                    count = 1;
+                    foreach (Airport airport in airports) {
+                        Console.WriteLine($"{count}: {airport.Type} - {airport.Code}");
+                        count++;
+                    }
+                    int arrivalChoice = Convert.ToInt32(Console.ReadLine());
+                    arrivalAirport = airports[arrivalChoice];
+                    Console.Clear();
+
+                    //searching for route
+
+                    Route selectedRoute;
+                    List<Route> routes = system.getRoutes();
+                    Route matchingRoute = routes.Find(route =>
+                        route.departureAirport == departureAirport && route.arrivalAirport == arrivalAirport);
+                    if (matchingRoute != null) {
+                        selectedRoute = matchingRoute;
+                    }
+                    else {
+                        system.addRoute(Airport departureAirport, Airport arrivalAirport);
+                        selectedRoute = routes.Find(route =>
+                            route.departureAirport == departureAirport && route.arrivalAirport == arrivalAirport);
+                    }
+
+                    //searching for flights
+                    Console.WriteLine($"Flights from {departureChoice} to {arrivalChoice}\n=================================================");
+                    Flight selectedFLight;
+                    List<Flight> flights = system.getFlights();
+                    List<Flight> foundFlights = flights.Find(flight =>
+                        flight.route.departureAirport == departureChoice && flight.route.arrivalAirport == arrivalAirport);
+                    if (foundFlights != null) {
+                        Console.WriteLine($"Avaliable flights from {departureAirport} to {arrivalAirport}:\n=================================================");
+                        int count = 1;
+                        foreach (flight in foundFlights) {
+                            Console.WriteLine($"{count}: {flight.departureDate} - {flight.arrivalDate} | {flight.duration}");
+                            count++;
+                        }
+                    }
+                    else {
+                        Console.WriteLine($"We are sorry, there are not any flights from {departureChoice} to {arrivalChoice} at the moment.\n" +
+                            $"  Would you like to sumbit, a flight request? [write \"yes\" to submit]");
+                        string answer = Console.ReadLine();
+                        if (answer != "yes") Console.WriteLine("Your request has been submited.");
+                    }
+
+
                     break;
-
                 case 2:
-           
-                    if(y == 1)
-                    {
-                        Console.WriteLine("podaj numer telefonu:");
-                        string phoneNumber = Console.ReadLine();
-                        Console.WriteLine("podaj email: ");
-                        string email = Console.ReadLine();
-
-                        Client client1 = new Client(person1, phoneNumber, email);
-                    }
-
-                    if (y == 2)
-                    {
-                        Console.WriteLine("podaj numer telefonu:");
-                        string phoneNumber = Console.ReadLine();
-                        Console.WriteLine("podaj email: ");
-                        string email = Console.ReadLine();
-
-                        Client client1 = new Client(comapny1, phoneNumber, email);
-                    }
-
-
-                    Console.WriteLine("Skad chcesz leciec?");
-                    string odlot = Console.ReadLine();
-                    //lista lotnisk case
-
-                    Console.WriteLine("Dokad chcesz leciec?");
-                    string przylot = Console.ReadLine();
-
-                    Console.WriteLine("Kiedy checesz leciec?");
-                    Console.WriteLine("Rok: ");
-                    string rok = Console.ReadLine();
-                    Console.WriteLine("Miesiac: ");
-                    string msc = Console.ReadLine();
-                    Console.WriteLine("Dzien: ");
-                    string day = Console.ReadLine();
-
-                    DateTime data = new DateTime(rok, msc, day);
-
-                    Console.WriteLine("Jakiej klasy chcesz bilet?");
-                    Console.WriteLine("wciśnij 1, aby wybrać klase business.");
-                    Console.WriteLine("wciśnij 2, aby wybrać klase economy.");
-                    Console.WriteLine("wciśnij 3, aby wybrać klase first.");
-
-                    int z = Convert.ToInt32(Console.ReadLine());
-
-                    switch (z)
-                    {
-                        case 1: 
-                    }
-
-
-
+                    break;
+                case 3:
+                    break;
             }
         }
 }

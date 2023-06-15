@@ -51,13 +51,18 @@ namespace FlightTicketReservationSystem {
             this.NumberOfGates = NumberOfGates;
             this.runways = runways;
         }
+
+        public abstract string Type { get; }
+        public string Code { get { return code; } }
     }
 
     class Local : Airport {
         public Local(string code, Cordinates cordinates, int NumberOfGates, List<Runway> runways) : base(code, cordinates, NumberOfGates, runways) { }
+        public override string Type { get { return "Local"; } }
     }
 
     class International : Airport {
         public International(string code, Cordinates cordinates, int NumberOfGates, List<Runway> runways) : base(code, cordinates, NumberOfGates, runways) { }
+        public override string Type { get { return "International"; } }
     }
 }

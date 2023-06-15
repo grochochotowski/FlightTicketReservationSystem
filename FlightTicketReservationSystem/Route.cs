@@ -7,19 +7,15 @@ using System.Threading.Tasks;
 
 namespace FlightTicketReservationSystem {
     class Route {
-        private Airport departureAirport;
-        private Airport arrivalAirport;
+        public Airport departureAirport;
+        public Airport arrivalAirport;
         private double distance;
-        private Runway departureRunway;
-        private Runway arrivalRunway;
 
-        public Route(Airport departureAirport, Airport arrivalAirport, double distance, Runway departureRunway, Runway arrivalRunway)
+        public Route(Airport departureAirport, Airport arrivalAirport)
         {
             this.departureAirport = departureAirport;
             this.arrivalAirport = arrivalAirport;
             this.distance = calculateDistance(departureAirport, arrivalAirport);
-            this.departureRunway = departureRunway;
-            this.arrivalRunway = arrivalRunway;
         }   
 
         public double calculateDistance(Airport departureAirport, Airport arrivalAirport) {

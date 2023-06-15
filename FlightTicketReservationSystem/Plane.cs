@@ -17,17 +17,22 @@ namespace FlightTicketReservationSystem {
             this.speed = speed;
             this.numberOfSeats = numberOfSeats;
         }
+        public abstract string data { get; }
     }
     class LightJet: Plane {
         public LightJet(string number, double width, double length, double maxDistance, double speed, int numberOfSeats): base(number, width, length, maxDistance, speed, numberOfSeats) { }
+        public override string data { get { return $"Light Jet - {number}"; } }
     }
     class MidSizeJet: Plane {
         public MidSizeJet(string number, double width, double length, double maxDistance, double speed, int numberOfSeats): base(number, width, length, maxDistance, speed, numberOfSeats) { }
+        public override string data { get { return $"Medium Size Jet - {number}"; } }
     }
     class JumboJet: Plane {
         public JumboJet(string number, double width, double length, double maxDistance, double speed, int numberOfSeats): base(number, width, length, maxDistance, speed, numberOfSeats) { }
+        public override string data { get { return $"Jumbo Jet - {number}"; } }
     }
     class BussinessJet: Plane {
         public BussinessJet(string number, double width, double length, double maxDistance, double speed, int numberOfSeats): base(number, width, length, maxDistance, speed, numberOfSeats) { }
+        public override string data { get { return $"Bussiness Jet - {number}"; } }
     }
 }

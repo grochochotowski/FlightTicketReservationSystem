@@ -3,24 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace FlightTicketReservationSystem {
-    internal class Client {
+    internal abstract class Client {
+        protected int clientId;
         protected string phoneNumber;
         protected string email;
         protected List<Ticket> tickets = new List<Ticket>();
-        protected Person person;
-        protected Company company;
 
-        public Client(Person person,  string phoneNumber, string email)
-        {   
-            this.person = person;
-            this.phoneNumber = phoneNumber;
-            this.email = email;
-        }
-        public Client(Company comapny, string phoneNumber, string email)
+        public Client(int clientId, string phoneNumber, string email)
         {
-            this.company = company;
+            this.clientId = clientId;
             this.phoneNumber = phoneNumber;
             this.email = email;
         }
@@ -38,28 +32,25 @@ namespace FlightTicketReservationSystem {
         {
             return tickets;
         }
+
+        public abstract string clientData { get; }
     }
 
     class Person : Client
     {
         private string firstName;
-        private string SecondName;
-        private string lastNmae;
+        private string secondName;
+        private string lastName;
         private int age;
-        private string surname;
 
-        public Person(string phoneNumber, string email, string surname, int age) : base(phoneNumber, email)
+        public Person(int clientId,  string phoneNumber, string email, string firstName, string secondName, string lastName, int age) : base(clientId, phoneNumber, email)
         {
-            this.surname = surname;
+            this.firstName = firstName;
+            this.secondName = secondName;
+            this.lastName = lastName;
             this.age = age;
         }
-
-        public Person(string firstName, string SecondName, string lastName,  string phoneNumber, string email) : base(phoneNumber, email)   
-        { 
-            this.firstName = firstName;
-            this.SecondName = SecondName;
-            this.lastNmae = lastName;
-        }
+        public override string clientData { get { return $"{clientId}: {firstName} {secondName}"; } }
     }
 
     class Company : Client
@@ -67,14 +58,12 @@ namespace FlightTicketReservationSystem {
         private string name;
         private string krs;
 
-        public Company(string phoneNumber, string email) : base(phoneNumber, email)
-        {
-        }
-
-        public Company(string name, string krs, string phoneNumber, string email) : base(phoneNumber, email) 
+        public Company(int clientId, string phoneNumber, string email, string name, string krs) : base(clientId, phoneNumber, email)
         {
             this.name = name;
             this.krs = krs;
         }
+
+        public override string clientData { get { return $"{clientId}: {name} - {krs}"; } }
     }
 }
