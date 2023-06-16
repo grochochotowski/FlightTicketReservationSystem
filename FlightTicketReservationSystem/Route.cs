@@ -20,7 +20,7 @@ namespace FlightTicketReservationSystem {
             this.distance = calculateDistance(departureAirport, arrivalAirport);
         }
 
-        public string data { get { return $"{departureAirport} to {arrivalAirport}: {distance}km"; } }
+        public string data { get { return $"{departureAirport.Code} to {arrivalAirport.Code}: {distance}km"; } }
 
         public double calculateDistance(Airport departureAirport, Airport arrivalAirport) {
             int x1 = departureAirport.Coordinates.X;

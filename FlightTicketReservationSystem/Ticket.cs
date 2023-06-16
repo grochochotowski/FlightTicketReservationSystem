@@ -8,41 +8,85 @@ namespace FlightTicketReservationSystem {
     //========================================================================================TICKET CLASS
     [Serializable]
     internal abstract class Ticket {
-        protected string ticketId;
         protected double price;
-        protected string seatNumber;
+        protected int seatNumber;
         protected Flight flight;
-        protected int meals;
-        protected bool Return;
         protected int commutationTicket;
 
 
-        public Ticket(string tickedId, double price, string seatNumber, Flight flight, int measl, bool Return, int commutationTicket) {
-            this.ticketId = tickedId;
-            this.price = price;
-            this.seatNumber = seatNumber;
+        public Ticket(Flight flight, int commutationTicket) {
+            price = CalculatePrice(flight, commutationTicket);
+            seatNumber = SetSeatNumber(flight);
             this.flight = flight;
-            this.meals = measl;
-            this.Return = Return;
             this.commutationTicket = commutationTicket;
+        }
+        public double CalculatePrice(Flight flight, int commucation) {
+            double price;
+            if (commucation == 0) {
+                price = flight.route.distance * 0.01;
+            }
+            else {
+                price = commucation * 50;
+            }
+        return price;
+        }
+        public int SetSeatNumber(Flight flight) {
+            int seatNumber;
+            if (flight == null) {
+                seatNumber = 0;
+            }
+            else {
+                int maxSeats = flight.plane.numberOfSeats;
+                Random random = new Random();
+                seatNumber = random.Next(1, maxSeats + 1);
+            }
+
+            return seatNumber;
         }
 
         public abstract string ticketData { get; }
     }
     //========================================================================================TICKET SUBCLASSES
     [Serializable]
-    class Buissnes : Ticket {
-        public Buissnes(string ticketId, double price, string seatNumber, Flight flight, int meals, bool Return, int commutationTicket) : base(ticketId, price, seatNumber, flight, meals, Return, commutationTicket) { }
-        public override string ticketData { get { return $"Bussines ticket {ticketId} - from {flight.route.departureAirport.Code} to {flight.route.arrivalAirport.Code}"; } }
+    class Bussines : Ticket {
+        public Bussines(Flight flight, int commutationTicket) : base(flight, commutationTicket) { }
+        public override string ticketData {
+            get {
+                if (commutationTicket > 0) {
+                    return $"Bussines commucation ticket for: {commutationTicket}";
+                }
+                else {
+                    return $"Bussines ticket from {flight.route.departureAirport.Code} to {flight.route.arrivalAirport.Code}";
+                }
+            }
+        }
     }
     [Serializable]
     class Economy : Ticket {
-        public Economy(string ticketId, double price, string seatNumber, Flight flight, int meals, bool Return, int commutationTicket) : base(ticketId, price, seatNumber, flight, meals, Return, commutationTicket) { }
-        public override string ticketData { get { return $"Economy ticket {ticketId} - from {flight.route.departureAirport.Code} to {flight.route.arrivalAirport.Code}"; } }
+        public Economy(Flight flight, int commutationTicket) : base(flight, commutationTicket) { }
+        public override string ticketData {
+            get {
+                if (commutationTicket > 0) {
+                    return $"Economy commucation ticket for: {commutationTicket}";
+                }
+                else {
+                    return $"Economy ticket from {flight.route.departureAirport.Code} to {flight.route.arrivalAirport.Code}";
+                }
+            }
+        }
     }
     [Serializable]
     class First : Ticket {
-        public First(string ticketId, double price, string seatNumber, Flight flight, int meals, bool Return, int commutationTicket) : base(ticketId, price, seatNumber, flight, meals, Return, commutationTicket) { }
-        public override string ticketData { get { return $"First class ticket {ticketId} - from {flight.route.departureAirport.Code} to {flight.route.arrivalAirport.Code}"; } }
+        public First(Flight flight, int commutationTicket) : base(flight, commutationTicket) { }
+        public override string ticketData {
+            get {
+                if (commutationTicket > 0) {
+                    return $"First class commucation ticket for: {commutationTicket}";
+                }
+                else {
+                    return $"First class ticket from {flight.route.departureAirport.Code} to {flight.route.arrivalAirport.Code}";
+                }
+            }
+        }
     }
 }

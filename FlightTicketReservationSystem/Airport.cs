@@ -27,7 +27,7 @@ namespace FlightTicketReservationSystem {
     [Serializable]
     abstract class Airport {
 
-        protected string code;
+        public string code;
         protected Coordinates coordinates;
 
         public Coordinates Coordinates {

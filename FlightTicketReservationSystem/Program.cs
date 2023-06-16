@@ -15,6 +15,7 @@ namespace FlightTicketReservationSystem {
                 $"at the moment.\nWould you like to submit a flight request? [write \"yes\" to submit]");
             string answer = Console.ReadLine();
             if (answer.ToUpper() == "YES") Console.WriteLine("Your request has been submitted.");
+            Console.ReadLine();
         }
         static void Main(string[] args) {
             string fileRoute = "system_state.bin";
@@ -316,8 +317,10 @@ namespace FlightTicketReservationSystem {
                                         Console.WriteLine("Plane:");
                                         count = 1;
                                         foreach (Plane plane in planes) {
-                                            Console.WriteLine($"{count}: {plane.data}");
-                                            count++;
+                                            if (plane.maxDistance > newFlightRoute.distance) {
+                                                Console.WriteLine($"{count}: {plane.data}");
+                                                count++;
+                                            }
                                         }
                                         int chosenPlaneId;
                                         try {
@@ -327,10 +330,17 @@ namespace FlightTicketReservationSystem {
                                             Console.WriteLine("Invalid input. Please enter a valid integer.");
                                             return;
                                         }
-                                        Plane newFlightPlane = planes[chosenPlaneId - 1];
+                                        Plane newFlightPlane = null;
+                                        count = 1;
+                                        foreach (Plane plane in planes) {
+                                            if (count == chosenPlaneId) {
+                                                newFlightPlane = plane;
+                                            }
+                                            count++;
+                                        }
                                         Console.Clear();
 
-                                        Console.WriteLine("Departure date [DD/MM/YYYY - Hrs:Min:Sec]:");
+                                        Console.WriteLine("Departure date [DD/MM/YYYY - Hrs.Min.Sec]:");
                                         string newFlightDepartureDate = Console.ReadLine();
 
                                         newFlight = new Flight(newFlightRoute, newFlightPlane, newFlightDepartureDate);
@@ -447,17 +457,20 @@ namespace FlightTicketReservationSystem {
                                     Console.WriteLine("Invalid input. Please enter a valid integer.");
                                     break;
                                 }
-                                
+
                                 count = 1;
                                 foreach (Client client in clients) {
-                                    if (client is Person && count == chosenAccount) {
-                                        loggedInAccount = client;
-                                        break;
+                                    if (client is Person) {
+                                        if (count == chosenAccount) {
+                                            loggedInAccount = client;
+                                            break;
+                                        }
+                                        count++;
                                     }
-                                    count++;
                                 }
                                 if (loggedInAccount == null) {
                                     Console.WriteLine($"Client with ID {chosenAccount} not found.");
+                                    Console.ReadLine();
                                 }
 
                                 // TICKET MANAGEMENT
@@ -480,67 +493,106 @@ namespace FlightTicketReservationSystem {
                                     // book new flight
                                     case 1:
                                         Console.Clear();
-                                        // choosing departure airport
-                                        Airport departureAirport;
-                                        Console.WriteLine("Choose a departure Airport:");
-                                        count = 1;
-                                        foreach (Airport airport in airports) {
-                                            Console.WriteLine($"{count}: {airport.Type} - {airport.Code}");
-                                            count++;
-                                        }
-                                        int departureChoice;
+                                        // choosing if commucation ticket
+                                        Console.WriteLine("If you want to buy communication ticket input for how many days, if not input '0': ");
+                                        int commucation;
                                         try {
-                                            departureChoice = Convert.ToInt32(Console.ReadLine());
+                                            commucation = Convert.ToInt32(Console.ReadLine());
                                         }
                                         catch (FormatException) {
                                             Console.WriteLine("Invalid input. Please enter a valid integer.");
                                             return;
                                         }
-                                        departureAirport = airports[departureChoice];
-                                        Console.Clear();
-                                        // choosing arrival airport
-                                        Airport arrivalAirport;
-                                        Console.WriteLine("Choose a departure Airport:");
-                                        count = 1;
-                                        foreach (Airport airport in airports) {
-                                            Console.WriteLine($"{count}: {airport.Type} - {airport.Code}");
-                                            count++;
-                                        }
-                                        int arrivalChoice;
+                                        //choosing class
+                                        Console.WriteLine("Class [1 - First / 2 - Economy:");
+                                        int newTicketClassChoice;
                                         try {
-                                            arrivalChoice = Convert.ToInt32(Console.ReadLine());
+                                            newTicketClassChoice = Convert.ToInt32(Console.ReadLine());
                                         }
                                         catch (FormatException) {
                                             Console.WriteLine("Invalid input. Please enter a valid integer.");
                                             return;
                                         }
-                                        arrivalAirport = airports[arrivalChoice];
-                                        Console.Clear();
-                                        // searching for route
-                                        Route selectedRoute;
-                                        Route matchingRoute = routes.Find(route =>
-                                            route.departureAirport == departureAirport && route.arrivalAirport == arrivalAirport);
-                                        if (matchingRoute != null) {
-                                            selectedRoute = matchingRoute;
-                                        }
-                                        else {
-                                            WeAreSorry(departureAirport.Code, arrivalAirport.Code);
-                                        }
-                                        // searching and displaying flights
-                                        Console.WriteLine($"Flights from {departureAirport} to {arrivalAirport}\n=================================================");
-                                        List<Flight> foundFlights = flights.FindAll(flight =>
-                                            flight.route.departureAirport == departureAirport && flight.route.arrivalAirport == arrivalAirport);
-                                        if (foundFlights != null) {
-                                            Console.WriteLine($"Avaliable flights from {departureAirport} to {arrivalAirport}:\n=================================================");
+                                        Flight newTicketFlight = null;
+                                        if (commucation == 0) {
+                                            // choosing departure airport
+                                            Airport departureAirport;
+                                            Console.WriteLine("Choose a departure Airport:");
                                             count = 1;
-                                            foreach (Flight flight in foundFlights) {
-                                                Console.WriteLine($"{count}: {flight.departureDate} - {flight.arrivalDate} | {flight.duration}");
+                                            foreach (Airport airport in airports) {
+                                                Console.WriteLine($"{count}: {airport.Type} - {airport.Code}");
                                                 count++;
                                             }
+                                            int departureChoice;
+                                            try {
+                                                departureChoice = Convert.ToInt32(Console.ReadLine());
+                                            }
+                                            catch (FormatException) {
+                                                Console.WriteLine("Invalid input. Please enter a valid integer.");
+                                                return;
+                                            }
+                                            departureAirport = airports[departureChoice - 1];
+                                            Console.Clear();
+                                            // choosing arrival airport
+                                            Airport arrivalAirport;
+                                            Console.WriteLine("Choose a arrival Airport:");
+                                            count = 1;
+                                            foreach (Airport airport in airports) {
+                                                Console.WriteLine($"{count}: {airport.Type} - {airport.Code}");
+                                                count++;
+                                            }
+                                            int arrivalChoice;
+                                            try {
+                                                arrivalChoice = Convert.ToInt32(Console.ReadLine());
+                                            }
+                                            catch (FormatException) {
+                                                Console.WriteLine("Invalid input. Please enter a valid integer.");
+                                                return;
+                                            }
+                                            arrivalAirport = airports[arrivalChoice - 1];
+                                            Console.Clear();
+                                            // searching for route
+                                            Route selectedRoute;
+                                            Route matchingRoute = routes.Find(route =>
+                                                route.departureAirport == departureAirport && route.arrivalAirport == arrivalAirport);
+                                            if (matchingRoute != null) {
+                                                selectedRoute = matchingRoute;
+                                            }
+                                            else {
+                                                WeAreSorry(departureAirport.Code, arrivalAirport.Code);
+                                            }
+                                            // searching and displaying flights
+                                            List<Flight> foundFlights = flights.FindAll(flight =>
+                                                flight.route.departureAirport == departureAirport && flight.route.arrivalAirport == arrivalAirport);
+                                            if (foundFlights != null) {
+                                                Console.WriteLine($"Avaliable flights from {departureAirport.code} to {arrivalAirport.code}:\n=================================================");
+                                                count = 1;
+                                                foreach (Flight flight in foundFlights) {
+                                                    Console.WriteLine($"{count}: {flight.departureDate} - {flight.arrivalDate} | {flight.duration}");
+                                                    count++;
+                                                }
+                                            }
+                                            else {
+                                                WeAreSorry(departureAirport.Code, arrivalAirport.Code);
+                                            }
+                                            int chosenFlightNum;
+                                            try {
+                                                chosenFlightNum = Convert.ToInt32(Console.ReadLine());
+                                            }
+                                            catch (FormatException) {
+                                                Console.WriteLine("Invalid input. Please enter a valid integer.");
+                                                return;
+                                            }
+                                            newTicketFlight = foundFlights[chosenFlightNum - 1];
                                         }
-                                        else {
-                                            WeAreSorry(departureAirport.Code, arrivalAirport.Code);
+                                        Ticket createdTicket = null;
+                                        if (newTicketClassChoice == 1) {
+                                            createdTicket = new First(newTicketFlight, commucation);
                                         }
+                                        else if (newTicketClassChoice == 2) {
+                                            createdTicket = new Economy(newTicketFlight, commucation);
+                                        }
+                                        loggedInAccount.addTicket(createdTicket);
                                         break;
                                     // manage tickets
                                     case 2:
@@ -568,7 +620,7 @@ namespace FlightTicketReservationSystem {
                                                 break;
                                                 // delete ticket
                                             default:
-                                                Ticket ticketToRemove = userTickets[ticketOption - 1];
+                                                Ticket ticketToRemove = userTickets[ticketOption - 2];
                                                 loggedInAccount.removeTicket(ticketToRemove);
                                                 break;
                                         }
@@ -606,15 +658,19 @@ namespace FlightTicketReservationSystem {
                                     Console.WriteLine("Invalid input. Please enter a valid integer.");
                                     return;
                                 }
-                                foreach (Company client in clients) {
-                                    if (count == chosenCompanyAccount) {
-                                        loggedInAccount = client;
-                                        break;
+                                count = 1;  
+                                foreach (Client client in clients) {
+                                    if (client is Company) {
+                                        if (count == chosenCompanyAccount) {
+                                            loggedInAccount = client;
+                                            break;
+                                        }
+                                        count++;
                                     }
-                                    count++;
                                 }
                                 if (loggedInAccount == null) {
                                     Console.WriteLine($"Client with ID {chosenCompanyAccount} not found.");
+                                    Console.ReadLine();
                                 }
 
                                 // TICKET MANAGEMENT
@@ -636,69 +692,112 @@ namespace FlightTicketReservationSystem {
                                 switch (companyOption) {
                                     // book new flight
                                     case 1:
-                                        // choosing departure airport
-                                        Airport departureAirport;
-                                        Console.WriteLine("Choose a departure Airport:");
-                                        count = 1;
-                                        foreach (Airport airport in airports) {
-                                            Console.WriteLine($"{count}: {airport.Type} - {airport.Code}");
-                                            count++;
-                                        }
-                                        int departureChoice;
+                                        Console.Clear();
+                                        // choosing if commucation ticket
+                                        Console.WriteLine("If you want to buy communication ticket input for how many days, if not input '0': ");
+                                        int commucation;
                                         try {
-                                            departureChoice = Convert.ToInt32(Console.ReadLine());
+                                            commucation = Convert.ToInt32(Console.ReadLine());
                                         }
                                         catch (FormatException) {
                                             Console.WriteLine("Invalid input. Please enter a valid integer.");
                                             return;
                                         }
-                                        departureAirport = airports[departureChoice];
-                                        Console.Clear();
-                                        // choosing arrival airport
-                                        Airport arrivalAirport;
-                                        Console.WriteLine("Choose a departure Airport:");
-                                        count = 1;
-                                        foreach (Airport airport in airports) {
-                                            Console.WriteLine($"{count}: {airport.Type} - {airport.Code}");
-                                            count++;
-                                        }
-                                        int arrivalChoice;
+                                        //choosing class
+                                        Console.WriteLine("Class [1 - First / 2 - Economy: / 3 - Bussines}");
+                                        int newTicketClassChoice;
                                         try {
-                                            arrivalChoice = Convert.ToInt32(Console.ReadLine());
+                                            newTicketClassChoice = Convert.ToInt32(Console.ReadLine());
                                         }
                                         catch (FormatException) {
                                             Console.WriteLine("Invalid input. Please enter a valid integer.");
                                             return;
                                         }
-                                        arrivalAirport = airports[arrivalChoice];
-                                        Console.Clear();
-                                        // searching for route
-                                        Route selectedRoute;
-                                        Route matchingRoute = routes.Find(route =>
-                                            route.departureAirport == departureAirport && route.arrivalAirport == arrivalAirport);
-                                        if (matchingRoute != null) {
-                                            selectedRoute = matchingRoute;
-                                        }
-                                        else {
-                                            WeAreSorry(departureAirport.Code, arrivalAirport.Code);
-                                        }
-                                        // searching and displaying flights
-                                        Console.WriteLine($"Flights from {departureAirport} to {arrivalAirport}\n=================================================");
-                                        List<Flight> foundFlights = flights.FindAll(flight =>
-                                            flight.route.departureAirport == departureAirport && flight.route.arrivalAirport == arrivalAirport);
-                                        if (foundFlights != null) {
-                                            Console.WriteLine($"Avaliable flights from {departureAirport} to {arrivalAirport}:\n=================================================");
+                                        Flight newTicketFlight = null;
+                                        if (commucation == 0) {
+                                            // choosing departure airport
+                                            Airport departureAirport;
+                                            Console.WriteLine("Choose a departure Airport:");
                                             count = 1;
-                                            foreach (Flight flight in foundFlights) {
-                                                Console.WriteLine($"{count}: {flight.departureDate} - {flight.arrivalDate} | {flight.duration}");
+                                            foreach (Airport airport in airports) {
+                                                Console.WriteLine($"{count}: {airport.Type} - {airport.Code}");
                                                 count++;
                                             }
+                                            int departureChoice;
+                                            try {
+                                                departureChoice = Convert.ToInt32(Console.ReadLine());
+                                            }
+                                            catch (FormatException) {
+                                                Console.WriteLine("Invalid input. Please enter a valid integer.");
+                                                return;
+                                            }
+                                            departureAirport = airports[departureChoice - 1];
+                                            Console.Clear();
+                                            // choosing arrival airport
+                                            Airport arrivalAirport;
+                                            Console.WriteLine("Choose a arrival Airport:");
+                                            count = 1;
+                                            foreach (Airport airport in airports) {
+                                                Console.WriteLine($"{count}: {airport.Type} - {airport.Code}");
+                                                count++;
+                                            }
+                                            int arrivalChoice;
+                                            try {
+                                                arrivalChoice = Convert.ToInt32(Console.ReadLine());
+                                            }
+                                            catch (FormatException) {
+                                                Console.WriteLine("Invalid input. Please enter a valid integer.");
+                                                return;
+                                            }
+                                            arrivalAirport = airports[arrivalChoice - 1];
+                                            Console.Clear();
+                                            // searching for route
+                                            Route selectedRoute;
+                                            Route matchingRoute = routes.Find(route =>
+                                                route.departureAirport == departureAirport && route.arrivalAirport == arrivalAirport);
+                                            if (matchingRoute != null) {
+                                                selectedRoute = matchingRoute;
+                                            }
+                                            else {
+                                                WeAreSorry(departureAirport.Code, arrivalAirport.Code);
+                                            }
+                                            // searching and displaying flights
+                                            List<Flight> foundFlights = flights.FindAll(flight =>
+                                                flight.route.departureAirport == departureAirport && flight.route.arrivalAirport == arrivalAirport);
+                                            if (foundFlights != null) {
+                                                Console.WriteLine($"Avaliable flights from {departureAirport.code} to {arrivalAirport.code}:\n=================================================");
+                                                count = 1;
+                                                foreach (Flight flight in foundFlights) {
+                                                    Console.WriteLine($"{count}: {flight.departureDate} - {flight.arrivalDate} | {flight.duration}");
+                                                    count++;
+                                                }
+                                            }
+                                            else {
+                                                WeAreSorry(departureAirport.Code, arrivalAirport.Code);
+                                            }
+                                            int chosenFlightNum;
+                                            try {
+                                                chosenFlightNum = Convert.ToInt32(Console.ReadLine());
+                                            }
+                                            catch (FormatException) {
+                                                Console.WriteLine("Invalid input. Please enter a valid integer.");
+                                                return;
+                                            }
+                                            newTicketFlight = foundFlights[chosenFlightNum - 1];
                                         }
-                                        else {
-                                            WeAreSorry(departureAirport.Code, arrivalAirport.Code);
+                                        Ticket createdTicket = null;
+                                        if (newTicketClassChoice == 1) {
+                                            createdTicket = new First(newTicketFlight, commucation);
                                         }
+                                        else if (newTicketClassChoice == 2) {
+                                            createdTicket = new Economy(newTicketFlight, commucation);
+                                        }
+                                        else if (newTicketClassChoice == 3) {
+                                            createdTicket = new Bussines(newTicketFlight, commucation);
+                                        }
+                                        loggedInAccount.addTicket(createdTicket);
                                         break;
-                                        // manage tickets
+                                    // manage tickets
                                     case 2:
                                         Console.Clear();
                                         Console.WriteLine("Your Tickets");
@@ -724,7 +823,7 @@ namespace FlightTicketReservationSystem {
                                                 break;
                                                 // delete ticket
                                             default:
-                                                Ticket ticketToRemove = companyTickets[ticketOption - 1];
+                                                Ticket ticketToRemove = companyTickets[ticketOption - 2];
                                                 loggedInAccount.removeTicket(ticketToRemove);
                                                 break;
                                         }

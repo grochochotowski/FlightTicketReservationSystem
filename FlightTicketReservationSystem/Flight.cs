@@ -9,35 +9,66 @@ namespace FlightTicketReservationSystem {
     [Serializable]
     internal class Flight {
         public Route route;
-        private Plane plane;
+        public Plane plane;
         public string departureDate, arrivalDate, gateNumebr; // date format: DD/MM/YYY - Hr.Min.Sec
         public double duration;
         public Flight(Route route, Plane plane, string departureDate) {
             this.route = route;
             this.plane = plane;
             this.departureDate = departureDate;
-            arrivalDate = calculateArrvialDate(departureDate, route.distance);
+            arrivalDate = CalculateArrivalDate(departureDate, route.distance);
             gateNumebr = "A56";
-            duration = calculateDuration(departureDate, arrivalDate);
+            duration = CalculateDuration(departureDate, arrivalDate);
         }
-        public string calculateArrvialDate(string departureDateString, double distance) {
-            DateTime departureDate = DateTime.ParseExact(departureDateString, "dd/MM/yyyy - H.mm.ss", null);
-            double planeSpeed = plane.speed;
-            double duration = distance / planeSpeed;
-            //?????????????????
-            DateTime arrivalDate = DateTime.ParseExact(departureDateString + duration, "dd/MM/yyyy - H.mm.ss", null);
+        public string CalculateArrivalDate(string departureDateString, double distance) {
+            try {
+                DateTime departureDate = DateTime.ParseExact(departureDateString, "dd/MM/yyyy - H.mm.ss", null);
 
-            return arrivalDate.ToString();
+                if (plane != null) {
+                    double planeSpeed = plane.speed;
+                    double duration = distance / planeSpeed;
+
+                    DateTime arrivalDate = departureDate.AddHours(duration);
+
+                    return arrivalDate.ToString("dd/MM/yyyy - H.mm.ss");
+                }
+                else {
+                    Console.WriteLine("An error occurred");
+                    Console.ReadLine();
+                }
+            }
+           
+            catch (Exception ex) {
+                Console.WriteLine("An error occurred: " + ex.Message);
+                Console.ReadLine();
+            }
+
+            return string.Empty;
         }
-        public double calculateDuration(string departureDateString, string arrivalDateString) {
-            DateTime departureDate = DateTime.ParseExact(departureDateString, "dd/MM/yyyy - H.mm.ss", null);
-            DateTime arrivalDate = DateTime.ParseExact(arrivalDateString, "dd/MM/yyyy - H.mm.ss", null);
 
-            TimeSpan duration = arrivalDate - departureDate;
 
-            double totalMinutes = duration.TotalMinutes;
-            return totalMinutes;
+        public double CalculateDuration(string departureDateString, string arrivalDateString) {
+            try {
+                DateTime departureDate = DateTime.ParseExact(departureDateString, "dd/MM/yyyy - H.mm.ss", null);
+                DateTime arrivalDate = DateTime.ParseExact(arrivalDateString, "dd/MM/yyyy - H.mm.ss", null);
+
+                TimeSpan duration = arrivalDate - departureDate;
+
+                double totalMinutes = duration.TotalMinutes;
+                return totalMinutes;
+            }
+            catch (FormatException) {
+                Console.WriteLine("Unable to create flight");
+                Console.ReadLine();
+            }
+            catch (Exception ex) {
+                Console.WriteLine("An error occurred: " + ex.Message);
+                Console.ReadLine();
+            }
+
+            return 0.0;
         }
-        public string data { get { return $"{route.departureAirport} at {departureDate} to {route.arrivalAirport} at {arrivalDate} ({duration}) - {plane.number}"; } }
+
+        public string data { get { return $"{route.departureAirport.Code} at {departureDate} to {route.arrivalAirport.code} at {arrivalDate} ({duration}) - {plane.number}"; } }
     }
 }
